@@ -1,0 +1,26 @@
+[project]
+name = "aispeechgenerator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "TheStoryOfaGirl", email = "viktoria.khmeleva@urfu.me" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "accelerate~=1.12.0",
+    "fastapi~=0.121.3",
+    "httpx~=0.28.1",
+    "pydantic~=2.12.4",
+    "pytest~=9.0.1",
+    "torch~=2.9.1",
+    "transformers~=4.57.1",
+    "uvicorn~=0.38.0",
+]
+
+[project.scripts]
+aispeechgenerator = "aispeechgenerator:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
