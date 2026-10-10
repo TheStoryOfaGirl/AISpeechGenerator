@@ -6,13 +6,12 @@ from aispeechgenerator.ai.model_parameters import (
     do_sample,
     max_length,
     max_new_tokens,
-    temperature,
-    top_p,
-    top_k,
     repetition_penalty,
+    temperature,
+    top_k,
+    top_p,
 )
-from aispeechgenerator.schemas.model import ModelSettings
-from aispeechgenerator.schemas.model import SpeechRequest
+from aispeechgenerator.schemas.model import ModelSettings, SpeechRequest
 
 
 @pytest.fixture

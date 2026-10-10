@@ -5,8 +5,6 @@
 стилей, которые могут использоваться при генерации речей.
 """
 
-from typing import List
-
 from fastapi import APIRouter, HTTPException
 
 from ..schemas.styles import SpeechStyle
@@ -16,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("")
-async def set_styles(styles_list: List[SpeechStyle]):
+async def set_styles(styles_list: list[SpeechStyle]):
     """
     Добавляет новые стили выступлений в систему.
 

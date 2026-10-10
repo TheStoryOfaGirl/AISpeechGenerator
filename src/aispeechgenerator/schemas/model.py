@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from pydantic import BaseModel
 
 
@@ -37,9 +35,9 @@ class SpeechRequest(BaseModel):
     topic: str
     duration_minutes: int
     style: str = "professional"
-    key_points: Optional[List[str]] = None
+    key_points: list[str] | None = None
     language: str = "ru"
-    custom_instructions: Optional[str] = None
+    custom_instructions: str | None = None
 
 
 class SpeechResponse(BaseModel):

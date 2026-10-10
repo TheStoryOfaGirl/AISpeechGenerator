@@ -13,7 +13,7 @@ from fastapi import APIRouter, Depends
 from ..ai import model_parameters
 from ..ai.speech_generator import SpeechGenerator
 from ..dependencies import get_speech_generator
-from ..schemas.model import SpeechRequest, SpeechResponse, ModelSettings
+from ..schemas.model import ModelSettings, SpeechRequest, SpeechResponse
 from ..utils import load_styles
 
 # Роутер для эндпоинтов генерации речи

@@ -33,15 +33,14 @@ class TestGenerateSpeechEndpoint:
         mock_instance.generate_speech.side_effect = RuntimeError(
             "Модель не загружена. Подождите."
         )
-        with pytest.raises(RuntimeError):
-            with patch(
-                "aispeechgenerator.dependencies._speech_generator", mock_instance
-            ):
-                response = client.post(
-                    "/api/model/generate_speech",
-                    json=sample_speech_request.model_dump(),
-                )
-                assert response.status_code == 500
+        with pytest.raises(RuntimeError), patch(
+            "aispeechgenerator.dependencies._speech_generator", mock_instance
+        ):
+            response = client.post(
+                "/api/model/generate_speech",
+                json=sample_speech_request.model_dump(),
+            )
+            assert response.status_code == 500
 
     def test_generate_speech_missing_required_field(self):
         """Тест ошибки при отсутствии обязательного поля"""

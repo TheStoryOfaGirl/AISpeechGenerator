@@ -3,10 +3,8 @@
 Включает класс SpeechGenerator для работы с моделью и генерации речей на основе запросов.
 """
 
-from typing import Dict
-
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from . import model_parameters
 from ..schemas.model import SpeechRequest
@@ -78,7 +76,7 @@ class SpeechGenerator:
             raise
 
     def generate_prompt(
-        self, request: SpeechRequest, available_styles: Dict[str, str]
+        self, request: SpeechRequest, available_styles: dict[str, str]
     ) -> str:
         """
         Генерирует форматированный промпт для модели на основе запроса.
@@ -119,7 +117,7 @@ class SpeechGenerator:
         return chat_format
 
     def generate_speech(
-        self, request: SpeechRequest, available_styles: Dict[str, str]
+        self, request: SpeechRequest, available_styles: dict[str, str]
     ) -> str:
         """
         Генерирует речь на основе запроса с использованием загруженной модели.

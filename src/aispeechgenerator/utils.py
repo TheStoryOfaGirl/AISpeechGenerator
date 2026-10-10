@@ -7,13 +7,12 @@
 """
 
 import json
-from typing import Dict
 
 # Константа с именем файла для хранения стилей
 STYLES_FILE = "speech_styles.json"
 
 
-def load_styles() -> Dict[str, str]:
+def load_styles() -> dict[str, str]:
     """
     Загружает стили выступлений из JSON-файла.
 
@@ -39,7 +38,7 @@ def load_styles() -> Dict[str, str]:
         return {}
 
 
-def save_styles(styles: Dict[str, str]):
+def save_styles(styles: dict[str, str]):
     """
     Сохраняет стили выступлений в JSON-файл.
 
