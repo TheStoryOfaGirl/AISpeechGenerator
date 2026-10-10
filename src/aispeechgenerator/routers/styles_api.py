@@ -5,8 +5,9 @@
 стилей, которые могут использоваться при генерации речей.
 """
 
-from fastapi import APIRouter, HTTPException
 from typing import List
+
+from fastapi import APIRouter, HTTPException
 
 from ..schemas.styles import SpeechStyle
 from ..utils import load_styles, save_styles

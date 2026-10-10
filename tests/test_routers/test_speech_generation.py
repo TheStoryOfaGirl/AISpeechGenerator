@@ -1,6 +1,8 @@
+from unittest.mock import Mock, patch
+
 import pytest
 from fastapi.testclient import TestClient
-from unittest.mock import Mock, patch
+
 from aispeechgenerator.main import app
 
 client = TestClient(app)

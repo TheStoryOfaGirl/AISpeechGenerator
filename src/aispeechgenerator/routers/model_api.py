@@ -7,6 +7,7 @@
 """
 
 from typing import Annotated
+
 from fastapi import APIRouter, Depends
 
 from ..ai import model_parameters

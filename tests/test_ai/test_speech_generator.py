@@ -1,7 +1,8 @@
-import pytest
 from unittest.mock import Mock
 
+import pytest
 import torch
+
 from aispeechgenerator.ai.speech_generator import SpeechGenerator
 
 
@@ -88,9 +89,9 @@ class TestSpeechGenerator:
     ):
         """Тест ошибки при генерации модели"""
 
-        speech_generator.model.generate.side_effect = Exception("Generation error")
+        speech_generator.model.generate.side_effect = RuntimeError("Generation error")
 
-        with pytest.raises(Exception):
+        with pytest.raises(RuntimeError):
             speech_generator.generate_speech(
                 sample_speech_request, sample_available_styles
             )

@@ -1,14 +1,6 @@
-import pytest
 from unittest.mock import Mock, patch
 
-# import sys
-# import os
-
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from aispeechgenerator.schemas.model import SpeechRequest
-from aispeechgenerator.schemas.model import ModelSettings
-
+import pytest
 
 from aispeechgenerator.ai.model_parameters import (
     do_sample,
@@ -19,6 +11,8 @@ from aispeechgenerator.ai.model_parameters import (
     top_k,
     repetition_penalty,
 )
+from aispeechgenerator.schemas.model import ModelSettings
+from aispeechgenerator.schemas.model import SpeechRequest
 
 
 @pytest.fixture

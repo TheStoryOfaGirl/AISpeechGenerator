@@ -4,10 +4,12 @@
 """
 
 from typing import Dict
-from transformers import AutoTokenizer, AutoModelForCausalLM
+
 import torch
-from ..schemas.model import SpeechRequest
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
 from . import model_parameters
+from ..schemas.model import SpeechRequest
 
 
 class SpeechGenerator:

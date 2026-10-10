@@ -6,8 +6,9 @@
 """
 
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+
 import uvicorn
+from fastapi import FastAPI
 
 from .dependencies import init_speech_generator
 from .routers.model_api import router as model_router
