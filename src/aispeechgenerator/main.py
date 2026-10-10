@@ -6,12 +6,13 @@
 """
 
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
-import uvicorn
 
-from dependencies import init_speech_generator
-from routers.model_api import router as model_router
-from routers.styles_api import router as style_router
+import uvicorn
+from fastapi import FastAPI
+
+from .dependencies import init_speech_generator
+from .routers.model_api import router as model_router
+from .routers.styles_api import router as style_router
 
 
 @asynccontextmanager
@@ -37,11 +38,12 @@ async def lifespan(app: FastAPI):
     yield
     # Здесь можно добавить код для очистки при завершении
 
+
 # Создание основного экземпляра FastAPI приложения
 app = FastAPI(
     title="Speech Generation API",
     description="API для генерации речей для выступлений",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 # Подключение роутеров API с префиксами

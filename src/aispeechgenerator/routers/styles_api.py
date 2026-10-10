@@ -6,71 +6,72 @@
 """
 
 from fastapi import APIRouter, HTTPException
-from typing import List
 
-from schemas.styles import SpeechStyle
-from utils import load_styles, save_styles
+from ..schemas.styles import SpeechStyle
+from ..utils import load_styles, save_styles
 
 router = APIRouter()
 
 
 @router.post("")
-async def set_styles(styles_list: List[SpeechStyle]):
+async def set_styles(styles_list: list[SpeechStyle]):
     """
-       Добавляет новые стили выступлений в систему.
+    Добавляет новые стили выступлений в систему.
 
-       Принимает список стилей и добавляет их в хранилище. Каждый стиль должен
-       иметь уникальное имя. Если стиль с таким именем уже существует,
-       возвращается ошибка.
+    Принимает список стилей и добавляет их в хранилище. Каждый стиль должен
+    иметь уникальное имя. Если стиль с таким именем уже существует,
+    возвращается ошибка.
 
-       Args:
-           styles_list (List[SpeechStyle]): Список объектов стилей для добавления.
-               Каждый стиль содержит:
-               - name (str): Уникальное имя стиля
-               - description (str): Описание стиля
+    Args:
+        styles_list (List[SpeechStyle]): Список объектов стилей для добавления.
+            Каждый стиль содержит:
+            - name (str): Уникальное имя стиля
+            - description (str): Описание стиля
 
-       Returns:
-           dict: Сообщение об успешном добавлении и данные добавленных стилей.
-               Пример:
-               {
-                   "message": "Стили добавлены",
-                   "styles": [
-                       {"name": "научный", "description": "Научный стиль речи"},
-                       {"name": "художественный", "description": "Художественный стиль"}
-                   ]
-               }
+    Returns:
+        dict: Сообщение об успешном добавлении и данные добавленных стилей.
+            Пример:
+            {
+                "message": "Стили добавлены",
+                "styles": [
+                    {"name": "научный", "description": "Научный стиль речи"},
+                    {"name": "художественный", "description": "Художественный стиль"}
+                ]
+            }
 
-       Raises:
-           HTTPException 400: Если стиль с таким именем уже существует.
+    Raises:
+        HTTPException 400: Если стиль с таким именем уже существует.
 
-       Example:
-           Запрос:
-           POST /styles
-           [
-               {
-                   "name": "научный",
-                   "description": "Научный стиль речи"
-               },
-               {
-                   "name": "художественный",
-                   "description": "Художественный стиль"
-               }
-           ]
+    Example:
+        Запрос:
+        POST /styles
+        [
+            {
+                "name": "научный",
+                "description": "Научный стиль речи"
+            },
+            {
+                "name": "художественный",
+                "description": "Художественный стиль"
+            }
+        ]
 
-           Ответ:
-           {
-               "message": "Стили добавлены",
-               "styles": [
-                   {"name": "научный", "description": "Научный стиль речи"},
-                   {"name": "художественный", "description": "Художественный стиль"}
-               ]
-           }
-       """
+        Ответ:
+        {
+            "message": "Стили добавлены",
+            "styles": [
+                {"name": "научный", "description": "Научный стиль речи"},
+                {"name": "художественный", "description": "Художественный стиль"}
+            ]
+        }
+    """
     styles = load_styles()
     added_styles = []
     for style in styles_list:
         if style.name in styles:
-            raise HTTPException(status_code=400, detail=f"Стиль с именем '{style.name}' уже существует")
+            raise HTTPException(
+                status_code=400, detail=f"Стиль с именем '{style.name}' уже существует"
+            )
         styles[style.name] = style.description
         added_styles.append(style.dict())
     save_styles(styles)
@@ -152,7 +153,9 @@ async def update_styles(style: SpeechStyle):
     """
     styles = load_styles()
     if style.name not in styles:
-        raise HTTPException(status_code=404, detail=f"Стиль с именем '{style.name}' не найден")
+        raise HTTPException(
+            status_code=404, detail=f"Стиль с именем '{style.name}' не найден"
+        )
     styles[style.name] = style.description
     save_styles(styles)
     return {"message": "Стиль обновлен", "style": style.dict()}

@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List, Optional
 
 
 class SpeechRequest(BaseModel):
@@ -32,12 +31,13 @@ class SpeechRequest(BaseModel):
         >>> request.topic
         'Инновации в образовании'
     """
+
     topic: str
     duration_minutes: int
     style: str = "professional"
-    key_points: Optional[List[str]] = None
+    key_points: list[str] | None = None
     language: str = "ru"
-    custom_instructions: Optional[str] = None
+    custom_instructions: str | None = None
 
 
 class SpeechResponse(BaseModel):
@@ -58,6 +58,7 @@ class SpeechResponse(BaseModel):
         >>> len(response.speech) > 0
         True
     """
+
     speech: str
 
 
@@ -101,6 +102,7 @@ class ModelSettings(BaseModel):
         >>> settings.do_sample
         True
     """
+
     temperature: float = 0.7
     top_p: float = 0.9
     top_k: int = 50

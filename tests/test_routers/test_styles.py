@@ -1,8 +1,12 @@
 import json
+import tempfile
 from pathlib import Path
+
 import pytest
 from fastapi.testclient import TestClient
-import tempfile
+
+from aispeechgenerator import utils
+from aispeechgenerator.main import app
 
 possible_files = [
     Path.cwd() / "speech_styles.json",
@@ -20,23 +24,19 @@ def load_styles() -> dict:
     if not TEST_STYLES_FILE.exists():
         return {}
     try:
-        with open(TEST_STYLES_FILE, 'r', encoding='utf-8') as f:
+        with open(TEST_STYLES_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     except json.JSONDecodeError:
         return {}
 
 
 def save_styles(styles: dict):
-    with open(TEST_STYLES_FILE, 'w', encoding='utf-8') as f:
+    with open(TEST_STYLES_FILE, "w", encoding="utf-8") as f:
         json.dump(styles, f, indent=4, ensure_ascii=False)
 
 
-import utils
-
 utils.load_styles = load_styles
 utils.save_styles = save_styles
-
-from main import app
 
 client = TestClient(app)
 
@@ -97,28 +97,40 @@ class TestStylesAPI:
         payload = [{"name": "professional", "description": "Официальный деловой стиль"}]
         client.post("/api/styles", json=payload)
 
-        response = client.post("/api/styles", json=[{"name": "professional", "description": "дубликат"}])
+        response = client.post(
+            "/api/styles", json=[{"name": "professional", "description": "дубликат"}]
+        )
         assert response.status_code == 400
 
     def test_put_updates_existing_style(self):
         """Проверяет успешное обновление существующего стиля через PUT-запрос."""
-        payload = [{"name": "motivational", "description": "Вдохновляющий и энергичный"}]
+        payload = [
+            {"name": "motivational", "description": "Вдохновляющий и энергичный"}
+        ]
         client.post("/api/styles", json=payload)
 
-        response = client.put("/api/styles", json={"name": "motivational", "description": "МОТИВАЦИЯ!!!"})
+        response = client.put(
+            "/api/styles", json={"name": "motivational", "description": "МОТИВАЦИЯ!!!"}
+        )
         assert response.status_code == 200
 
     def test_put_nonexistent_style_returns_404(self):
         """Проверяет, что обновление несуществующего стиля возвращает ошибку 404."""
-        response = client.put("/api/styles", json={"name": "ghost", "description": "404"})
+        response = client.put(
+            "/api/styles", json={"name": "ghost", "description": "404"}
+        )
         assert response.status_code == 404
 
     def test_get_after_update_has_new_description(self):
         """Проверяет, что после обновления стиля GET возвращает обновленное описание."""
-        payload = [{"name": "motivational", "description": "Вдохновляющий и энергичный"}]
+        payload = [
+            {"name": "motivational", "description": "Вдохновляющий и энергичный"}
+        ]
         client.post("/api/styles", json=payload)
 
-        client.put("/api/styles", json={"name": "motivational", "description": "МОТИВАЦИЯ!!!"})
+        client.put(
+            "/api/styles", json={"name": "motivational", "description": "МОТИВАЦИЯ!!!"}
+        )
 
         response = client.get("/api/styles")
         assert response.status_code == 200
