@@ -6,8 +6,8 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from . import model_parameters
 from ..schemas.model import SpeechRequest
+from . import model_parameters
 
 
 class SpeechGenerator:
