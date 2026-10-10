@@ -6,7 +6,7 @@
 переменная для хранения инициализированного экземпляра SpeechGenerator.
 """
 
-from ai.speech_generator import SpeechGenerator
+from .ai.speech_generator import SpeechGenerator
 
 # Глобальная переменная для хранения единственного экземпляра SpeechGenerator
 # Используется для реализации паттерна Singleton
@@ -14,7 +14,6 @@ _speech_generator = None
 
 
 async def get_speech_generator() -> SpeechGenerator:
-
     """
     Dependency provider для внедрения SpeechGenerator в эндпоинты FastAPI.
 
@@ -41,7 +40,6 @@ async def get_speech_generator() -> SpeechGenerator:
 
 
 def init_speech_generator():
-
     """
     Инициализирует SpeechGenerator при старте приложения.
 
@@ -62,8 +60,8 @@ def init_speech_generator():
         Exception: Если произошла ошибка при загрузке модели.
     """
 
-    print('Начало загрузки модели...')
+    print("Начало загрузки модели...")
     global _speech_generator
     _speech_generator = SpeechGenerator()
     _speech_generator.load_model()
-    print('Модель загружена')
+    print("Модель загружена")

@@ -1,22 +1,23 @@
 import pytest
 from unittest.mock import Mock, patch
-import sys
-import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# import sys
+# import os
 
-from schemas.model import SpeechRequest
-from schemas.model import ModelSettings
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from aispeechgenerator.schemas.model import SpeechRequest
+from aispeechgenerator.schemas.model import ModelSettings
 
 
-from ai.model_parameters import (
+from aispeechgenerator.ai.model_parameters import (
     do_sample,
     max_length,
     max_new_tokens,
     temperature,
     top_p,
     top_k,
-    repetition_penalty
+    repetition_penalty,
 )
 
 
@@ -29,7 +30,7 @@ def sample_speech_request():
         style="formal",
         language="ru",
         key_points=["Искусственный интеллект", "Робототехника", "Биотехнологии"],
-        custom_instructions="Сделать акцент на этические аспекты"
+        custom_instructions="Сделать акцент на этические аспекты",
     )
 
 
@@ -39,7 +40,7 @@ def sample_available_styles():
     return {
         "formal": "Формальный стиль выступления",
         "casual": "Неформальный стиль выступления",
-        "inspirational": "Вдохновляющий стиль"
+        "inspirational": "Вдохновляющий стиль",
     }
 
 
@@ -50,17 +51,17 @@ def mock_speech_generator():
     mock_instance.model_loaded = True
     mock_instance.generate_speech.return_value = "Это сгенерированная тестовая речь."
 
-    with patch('dependencies._speech_generator', mock_instance):
+    with patch("aispeechgenerator.dependencies._speech_generator", mock_instance):
         yield mock_instance
 
 
 @pytest.fixture
 def mock_load_styles():
     """Фикстура для мокинга функции load_styles"""
-    with patch('utils.load_styles') as mock_load:
+    with patch("aispeechgenerator.utils.load_styles") as mock_load:
         mock_load.return_value = {
             "formal": "Формальный стиль выступления",
-            "casual": "Неформальный стиль выступления"
+            "casual": "Неформальный стиль выступления",
         }
         yield mock_load
 
@@ -75,7 +76,7 @@ def model_parameters():
         temperature=temperature,
         top_p=top_p,
         top_k=top_k,
-        repetition_penalty=repetition_penalty
+        repetition_penalty=repetition_penalty,
     )
 
 
@@ -89,12 +90,13 @@ def sample_model_parameters():
         temperature=0.5,
         top_p=0.8,
         top_k=30,
-        repetition_penalty=1.2
+        repetition_penalty=1.2,
     )
 
 
 @pytest.fixture
 def model_parameters_module():
     """Фикстура возвращает сам модуль с параметрами"""
-    from ai import model_parameters
+    from aispeechgenerator.ai import model_parameters
+
     return model_parameters
